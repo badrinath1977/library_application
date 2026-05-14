@@ -1,0 +1,5 @@
+2026-05-13 10:17:22 ERROR request failed
+TypeError: Cannot read properties of undefined (reading 'id')
+    at createOrder (C:\apps\node\order.js:22:10)
+    at handler (C:\apps\node\api.js:9:3)
+

@@ -1,0 +1,14 @@
+{
+  "KeyVaultURL": "https://testingkeyvalut.vault.azure.net/",
+  "SecretsName": [
+    "sec1",
+    "sec2",
+    "sec3"
+  ],
+  "Key": [
+    "k1",
+    "k2"
+  ],
+  "LogLocation": "C:/Logs/keyvault_library"
+}
+

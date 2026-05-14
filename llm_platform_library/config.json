@@ -1,0 +1,21 @@
+{
+  "Provider": "mock",
+  "DefaultModel": "gpt-4.1-mini",
+  "LogLocation": "C:/Logs/llm_platform_library",
+  "PromptFolder": "prompts",
+  "Departments": {
+    "HR": ["leave", "salary", "benefits", "policy"],
+    "Finance": ["invoice", "budget", "expense", "payment"],
+    "IT": ["password", "access", "laptop", "vpn"],
+    "Legal": ["contract", "agreement", "compliance"],
+    "Sales": ["lead", "customer", "pricing", "proposal"],
+    "General": []
+  },
+  "ModelPricing": {
+    "gpt-4.1-mini": {
+      "InputPer1KTokens": 0.00015,
+      "OutputPer1KTokens": 0.0006
+    }
+  }
+}
+

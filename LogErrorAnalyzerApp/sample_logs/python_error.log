@@ -1,0 +1,8 @@
+2026-05-13 10:15:22 ERROR PaymentModule Failed to process payment
+Traceback (most recent call last):
+  File "C:\Apps\payments\service.py", line 42, in process_payment
+    amount = calculate_total(order)
+  File "C:\Apps\payments\pricing.py", line 18, in calculate_total
+    return order["amount"] / order["quantity"]
+ZeroDivisionError: division by zero
+

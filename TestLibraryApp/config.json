@@ -1,0 +1,12 @@
+{
+  "KeyVaultURL": "https://badritestingkeyvalut.vault.azure.net/",
+  "SecretsName": [
+    "DEV-SQL-GENAI-CONNECTION"   
+  ],
+  "Key": [
+    "DECRPTED-PII"
+    
+  ],
+  "LogLocation": "C:/Logs/test_library_app"
+}
+

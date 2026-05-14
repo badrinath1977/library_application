@@ -1,0 +1,12 @@
+AppErrorDBLog:
+  connection_string: "DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost;DATABASE=GenaAI_OpenSearch;Trusted_Connection=yes;TrustServerCertificate=yes;"
+  schema_name: "GenAI_V1"
+  table_name: "ErrorLog"
+  stored_procedure_name: null
+  application_name: "MyPythonApp"
+  timeout_seconds: 30
+  retry_count: 2
+  fallback_file_path: "logs/app_error_db_fallback.log"
+  suppress_logger_errors: true
+  suppress_original_exception: false
+

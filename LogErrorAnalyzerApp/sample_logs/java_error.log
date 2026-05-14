@@ -1,0 +1,5 @@
+2026-05-13 10:16:22 ERROR com.example.OrderService - failed to save order
+java.lang.NullPointerException: Cannot invoke "Order.getId()" because "order" is null
+    at com.example.OrderService.save(OrderService.java:77)
+    at com.example.ApiController.create(ApiController.java:31)
+

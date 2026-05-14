@@ -1,0 +1,8 @@
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2.6
+pydantic-settings>=2.2
+pytest>=8.0
+httpx>=0.27
+../Keyvault_library/dist/keyvault_library-0.1.0-py3-none-any.whl
+../AppErrorDBLog_Library/dist/apperrordblog_library-0.1.0-py3-none-any.whl

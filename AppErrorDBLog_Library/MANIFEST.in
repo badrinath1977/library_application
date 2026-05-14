@@ -1,0 +1,4 @@
+include README.md
+recursive-include sql *.sql
+recursive-include examples *.py *.json *.yaml
+

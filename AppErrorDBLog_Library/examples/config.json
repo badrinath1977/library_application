@@ -1,0 +1,31 @@
+{
+  "AppErrorDBLog": {
+    "connection_string": "DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost;DATABASE=GenaAI_OpenSearch;Trusted_Connection=yes;TrustServerCertificate=yes;",
+    "schema_name": "GenAI_V1",
+    "table_name": "ErrorLog",
+    "stored_procedure_name": null,
+    "application_name": "MyPythonApp",
+    "timeout_seconds": 30,
+    "retry_count": 2,
+    "fallback_file_path": "logs/app_error_db_fallback.log",
+    "suppress_logger_errors": true,
+    "suppress_original_exception": false,
+    "columns": {
+      "correlation_id": "CorrelationId",
+      "session_id": "SessionId",
+      "user_id": "UserId",
+      "application_name": "ApplicationName",
+      "module_name": "ModuleName",
+      "error_type": "ErrorType",
+      "error_code": "ErrorCode",
+      "error_message": "ErrorMessage",
+      "stack_trace": "StackTrace",
+      "request_path": "RequestPath",
+      "request_payload": "RequestPayload",
+      "additional_info_json": "AdditionalInfoJson",
+      "ip_address": "IPAddress",
+      "created_date": "CreatedDate"
+    }
+  }
+}
+
