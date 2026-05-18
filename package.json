@@ -1,0 +1,16 @@
+{
+  "name": "python-library-monorepo-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Utility scripts for collecting library dist artifacts across the monorepo.",
+  "scripts": {
+    "collect-dists": "node scripts/collect-dists.js",
+    "collect-dists:copy": "node scripts/collect-dists.js --copy",
+    "collect-dists:move": "node scripts/collect-dists.js --move",
+    "collect-dists:copy:clean": "node scripts/collect-dists.js --copy --clean",
+    "collect-dists:move:clean": "node scripts/collect-dists.js --move --clean"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

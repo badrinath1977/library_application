@@ -1,0 +1,70 @@
+{
+  "application": "loan-service",
+  "version": "1.0",
+  "restorePolicy": {
+    "enabled": true,
+    "allowedRoles": ["PII_ADMIN", "SUPPORT_L2"],
+    "requireReason": true,
+    "audit": true
+  },
+  "keyConfig": {
+    "keyProvider": "ENV",
+    "key1Ref": "PII_KEY_1",
+    "key2Ref": "PII_KEY_2"
+  },
+  "rules": [
+    {
+      "name": "customer-name",
+      "jsonPath": "$.customer.name",
+      "type": "NAME",
+      "regex": "^[A-Za-z .'-]{2,100}$",
+      "action": {
+        "type": "TOKENIZE",
+        "restore": true,
+        "params": {
+          "tokenFormat": "{{PII_${type}_${sequence}}}"
+        }
+      }
+    },
+    {
+      "name": "email",
+      "jsonPath": "$.customer.email",
+      "type": "EMAIL",
+      "regex": "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$",
+      "action": {
+        "type": "TOKENIZE",
+        "restore": true
+      }
+    },
+    {
+      "name": "phone",
+      "jsonPath": "$.customer.phone",
+      "type": "PHONE",
+      "regex": "^[0-9]{10}$",
+      "action": {
+        "type": "TOKENIZE",
+        "restore": true
+      }
+    },
+    {
+      "name": "password",
+      "jsonPath": "$.credentials.password",
+      "type": "PASSWORD",
+      "regex": "^.*$",
+      "action": {
+        "type": "DROP",
+        "restore": false
+      }
+    },
+    {
+      "name": "api-key",
+      "jsonPath": "$.headers.apiKey",
+      "type": "API_KEY",
+      "regex": "^.*$",
+      "action": {
+        "type": "REDACT",
+        "restore": false
+      }
+    }
+  ]
+}

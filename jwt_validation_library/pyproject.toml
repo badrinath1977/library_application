@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=82.0.1", "wheel>=0.47.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jwt-validation-library"
+version = "1.0.0"
+description = "Production-ready JWT access token validation library with JWKS support."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "JWT Validation Library Maintainers" }]
+keywords = ["jwt", "jwks", "oauth2", "oidc", "security", "validation"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Security",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
+dependencies = [
+  "PyJWT[crypto]>=2.8.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.5.0",
+  "mypy>=1.10.0",
+  "cryptography>=42.0.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["jwt_validation*"]
+
+[tool.setuptools.package-data]
+jwt_validation = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "N", "S", "UP", "W"]
+ignore = ["S101", "S105", "S106"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_configs = true
+warn_return_any = true

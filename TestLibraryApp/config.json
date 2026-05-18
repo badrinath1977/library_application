@@ -7,6 +7,5 @@
     "DECRPTED-PII"
     
   ],
-  "LogLocation": "C:/Logs/test_library_app"
+  "LogLocation": "logs/test_library_app"
 }
-

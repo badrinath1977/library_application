@@ -1,5 +1,4 @@
-../Keyvault_library/dist/keyvault_library-0.1.0-py3-none-any.whl
+../libraries-dist/Keyvault_library/keyvault_library-0.1.0-py3-none-any.whl
 azure-identity
 azure-keyvault-secrets
 azure-keyvault-keys
-

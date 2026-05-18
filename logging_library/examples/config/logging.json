@@ -1,0 +1,56 @@
+{
+  "enabled": true,
+  "level": "INFO",
+  "format": "json",
+  "timestamp_format": "iso8601",
+  "outputs": [
+    {
+      "type": "console",
+      "enabled": true,
+      "format": "pretty"
+    },
+    {
+      "type": "file",
+      "enabled": true,
+      "format": "json",
+      "path": "logs/application.log",
+      "rolling_policy": {
+        "max_bytes": 10485760,
+        "backup_count": 7,
+        "compression": true
+      }
+    }
+  ],
+  "metadata": {
+    "application": "billing-platform",
+    "environment": "production",
+    "service": "payments-api",
+    "version": "1.4.2",
+    "custom": {
+      "owner": "platform-engineering"
+    }
+  },
+  "masking": {
+    "enabled": true,
+    "mask": "***MASKED***",
+    "sensitive_keys": [
+      "password",
+      "token",
+      "accessToken",
+      "refreshToken",
+      "apiKey",
+      "authorization",
+      "secret",
+      "cookies",
+      "sessionId"
+    ]
+  },
+  "async": {
+    "enabled": true,
+    "queue_size": 10000,
+    "batch_size": 100,
+    "flush_interval_seconds": 1,
+    "drop_when_full": false,
+    "fail_fast": false
+  }
+}

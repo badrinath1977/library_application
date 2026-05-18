@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=82.0.1", "wheel>=0.47.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pii-protection"
+version = "1.0.0"
+description = "Config-driven PII protection, tokenization, encryption, and restore support for LLM workflows."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "PII Protection Maintainers" }]
+dependencies = [
+  "pydantic>=2.0",
+  "jsonpath-ng>=1.6.0",
+  "cryptography>=42.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.5.0",
+  "mypy>=1.10.0"
+]
+fastapi = [
+  "fastapi>=0.110",
+  "uvicorn>=0.27"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pii_protection*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "N", "S", "UP", "W"]
+ignore = ["S101", "S105", "S106"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = ["jsonpath_ng", "jsonpath_ng.*"]
+ignore_missing_imports = true

@@ -25,10 +25,10 @@ If `pip-audit` fails because of unrelated packages in the shared Python environm
 python -m build
 ```
 
-Expected wheel:
+Expected wheel after collecting library distributions:
 
 ```text
-C:\Projects\Python-Library\Keyvault_library\dist\keyvault_library-0.1.0-py3-none-any.whl
+C:\Projects\Python-Library\libraries-dist\Keyvault_library\keyvault_library-0.1.0-py3-none-any.whl
 ```
 
 ## Install the Wheel
@@ -63,7 +63,7 @@ Configuration loaded successfully
 KeyVault URL: https://testingkeyvalut.vault.azure.net/
 Secrets Count: 3
 Keys Count: 2
-Log Location: C:/Logs/test_library_app
+Log Location: logs/test_library_app
 Test completed successfully
 ```
 
@@ -72,7 +72,7 @@ Test completed successfully
 The test app config writes logs to:
 
 ```text
-C:/Logs/test_library_app
+TestLibraryApp/logs/test_library_app
 ```
 
 The log file name follows:
