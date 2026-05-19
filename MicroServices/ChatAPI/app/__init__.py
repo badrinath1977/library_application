@@ -1,0 +1,2 @@
+"""ChatAPI application package."""
+

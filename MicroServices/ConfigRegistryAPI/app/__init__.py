@@ -1,0 +1,2 @@
+"""ConfigRegistryAPI application package."""
+

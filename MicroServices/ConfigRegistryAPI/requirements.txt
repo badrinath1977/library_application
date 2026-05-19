@@ -1,0 +1,12 @@
+../../libraries-dist/AppErrorDBLog_Library/apperrordblog_library-0.1.0-py3-none-any.whl
+../../libraries-dist/Keyvault_library/keyvault_library-0.1.0-py3-none-any.whl
+../../libraries-dist/logging_library/enterprise_logging_library-1.0.0-py3-none-any.whl
+../../libraries-dist/jwt_validation_library/jwt_validation_library-1.0.0-py3-none-any.whl
+../../libraries-dist/pii_protection_library/pii_protection-1.0.0-py3-none-any.whl
+fastapi>=0.110.0,<1.0.0
+uvicorn[standard]>=0.27.0,<1.0.0
+pyodbc>=5.0.0,<6.0.0
+pydantic>=2.6.0,<3.0.0
+PyJWT[crypto]>=2.8.0,<3.0.0
+cryptography>=42.0.0
+jsonpath-ng>=1.6.0

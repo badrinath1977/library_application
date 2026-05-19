@@ -1,0 +1,2 @@
+"""AbsenceAPI application package."""
+

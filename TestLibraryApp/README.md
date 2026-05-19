@@ -1,48 +1,35 @@
 # TestLibraryApp
 
-`TestLibraryApp` is a separate consumer application used to validate that `keyvault-library` works like an installed third-party package.
+`TestLibraryApp` is a consumer application used to validate that all local libraries can be installed from the shared `libraries-dist` folder and used like third-party packages.
 
-It has its own `config.json` and explicitly passes that file to:
+## Shared Distribution Folder
 
-```python
-KeyVaultManager.from_file("config.json")
-```
-
-The library must read this application's config file, not `Keyvault_library/config.json` and not any package-internal file.
-
-## Build the Library
-
-From the library project:
-
-```powershell
-cd C:\Projects\Python-Library\Keyvault_library
-python build_library.py
-```
-
-If `pip-audit` fails because of unrelated packages in the shared Python environment, you can still build the wheel directly:
-
-```powershell
-python -m build
-```
-
-Expected wheel after collecting library distributions:
+All library artifacts are collected under:
 
 ```text
-C:\Projects\Python-Library\libraries-dist\Keyvault_library\keyvault_library-0.1.0-py3-none-any.whl
+C:\Projects\Python-Library\libraries-dist
 ```
 
-## Install the Wheel
+Expected libraries:
 
-From this test application:
+- `AppErrorDBLog_Library`
+- `Keyvault_library`
+- `llm_platform_library`
+- `logging_library`
+- `jwt_validation_library`
+- `pii_protection_library`
+
+## Install Libraries
 
 ```powershell
 cd C:\Projects\Python-Library\TestLibraryApp
-python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
-## Run the Test App
+`requirements.txt` references wheels directly from `../libraries-dist/...`.
+
+## Run All Library Smoke Tests
 
 ```powershell
 python app.py
@@ -54,43 +41,64 @@ Or:
 python run_test_app.py
 ```
 
+## What The App Tests
+
+- `keyvault_library`: loads the app-owned `config.json`
+- `app_error_db_log`: logs a synthetic exception and safely uses fallback logging
+- `llm_platform_library`: routes a prompt, renders a template, and tracks cost
+- `enterprise_logging`: writes a structured log file
+- `jwt_validation`: validates a local HS256 JWT and returns `sub`
+- `pii_protection`: tokenizes and restores an email placeholder
+
+## Separate Test Files
+
+Each library has its own test file so the examples are easy to understand:
+
+```text
+library_tests/test_keyvault_library.py
+library_tests/test_app_error_db_log_library.py
+library_tests/test_llm_platform_library.py
+library_tests/test_enterprise_logging_library.py
+library_tests/test_jwt_validation_library.py
+library_tests/test_pii_protection_library.py
+```
+
+Run one test directly:
+
+```powershell
+.\.venv\Scripts\python.exe .\library_tests\test_pii_protection_library.py
+```
+
+## Per-Library READMEs
+
+Each library also has a short explanation file:
+
+```text
+docs/keyvault_library.md
+docs/app_error_db_log_library.md
+docs/llm_platform_library.md
+docs/enterprise_logging_library.md
+docs/jwt_validation_library.md
+docs/pii_protection_library.md
+```
+
 ## Expected Output
 
 ```text
-KeyVault Library Test Application Started
-Config File Used: C:\Projects\Python-Library\TestLibraryApp\config.json
-Configuration loaded successfully
-KeyVault URL: https://testingkeyvalut.vault.azure.net/
-Secrets Count: 3
-Keys Count: 2
-Log Location: logs/test_library_app
-Test completed successfully
+TestLibraryApp all-library smoke test started
+PASS keyvault_library: ...
+PASS app_error_db_log: ...
+PASS llm_platform_library: ...
+PASS enterprise_logging: ...
+PASS jwt_validation: ...
+PASS pii_protection: ...
+All library smoke tests completed successfully
 ```
 
-## Verify Logs
+## Logs
 
-The test app config writes logs to:
+Runtime logs are written under:
 
 ```text
-TestLibraryApp/logs/test_library_app
+TestLibraryApp/logs
 ```
-
-The log file name follows:
-
-```text
-keyvault_library_YYYYMMDD.log
-```
-
-## Confirm It Reads Its Own Config
-
-The app prints:
-
-```text
-Config File Used: <absolute path to TestLibraryApp/config.json>
-```
-
-You can also temporarily change `TestLibraryApp/config.json`, for example change `KeyVaultURL`, then rerun `python app.py`. The printed value should match the app config file.
-
-## Safe Failure Behavior
-
-If `config.json` is missing, invalid, or unreadable, the app catches `KeyVaultLibraryError`, prints a safe configuration error message, and exits with a non-zero code.
