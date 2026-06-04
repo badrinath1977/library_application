@@ -1,0 +1,46 @@
+{
+  "app_env": "local",
+  "service_name": "project-name",
+  "route_name": "sample",
+  "api_version": "1.0.0",
+  "api_prefix": "/api",
+  "docs_url": "docs",
+  "redoc_url": "redoc",
+  "openapi_url": "openapi.json",
+  "log_level": "INFO",
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8000,
+    "reload": true
+  },
+  "cors": {
+    "allow_origins": ["*"],
+    "allow_credentials": false,
+    "allow_methods": ["*"],
+    "allow_headers": ["*"]
+  },
+  "keyvault": {
+    "url": ""
+  },
+  "jwt": {
+    "required": true,
+    "audience": [],
+    "issuer": [],
+    "secret": "",
+    "jwks_url": "",
+    "algorithms": ["HS256", "RS256"]
+  },
+  "error_db": {
+    "enabled": false,
+    "path": "error_logs.db"
+  },
+  "database": {
+    "type": "sqlserver",
+    "server": "localhost\\SQLEXPRESS",
+    "database": "master",
+    "driver": "ODBC Driver 17 for SQL Server",
+    "trusted_connection": true,
+    "trust_server_certificate": true,
+    "connection_string": ""
+  }
+}
