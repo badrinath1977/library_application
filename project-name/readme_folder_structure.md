@@ -9,6 +9,7 @@ project-name/
 |-- manifest.yaml
 |-- README.md
 |-- readme_setup.md
+|-- readme_test.md
 |-- readme_folder_structure.md
 `-- app/
     |-- main.py

@@ -27,6 +27,8 @@ This template centralizes non-functional requirements so business teams only imp
 - Repository logic
 - Request, response, and database models
 
+Local testing instructions are available in `readme_test.md`.
+
 The common platform concerns are handled by middleware and core helpers:
 
 - JWT validation through direct PyJWT validation

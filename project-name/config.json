@@ -24,7 +24,10 @@
   },
   "jwt": {
     "required": true,
-    "audience": ["local-test-api"],
+    "audience": [
+      "local-test-api",
+      "api://213213213123"
+    ],
     "issuer": ["local-test-issuer"],
     "secret": "change-this-local-test-secret",
     "jwks_url": "",
