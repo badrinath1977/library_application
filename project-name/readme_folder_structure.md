@@ -19,6 +19,7 @@ project-name/
     |   `-- exceptions.py
     |-- api/
     |   |-- routes/
+    |   |   |-- auth_routes.py
     |   |   |-- health_routes.py
     |   |   |-- customer_routes.py
     |   |   `-- sample_routes.py
@@ -33,6 +34,8 @@ project-name/
     |   `-- db_models.py
     |-- service/
     |   |-- customer_service.py
+    |   |-- external_api_service.py
+    |   |-- token_service.py
     |   `-- sample_service.py
     |-- repository/
     |   |-- customer_repository.py

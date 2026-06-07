@@ -7,6 +7,7 @@ from app.core.exceptions import AuthenticationError
 PUBLIC_PATHS = {"/docs", "/openapi.json", "/redoc"}
 PUBLIC_PATH_CONTAINS = ("/health",)
 PUBLIC_PATH_SUFFIXES = ("/docs", "/openapi.json", "/redoc")
+PUBLIC_TEST_PATH_SUFFIXES = ("/auth/test-token",)
 
 
 async def jwt_auth_middleware(request: Request, call_next):
@@ -14,6 +15,7 @@ async def jwt_auth_middleware(request: Request, call_next):
         request.url.path in PUBLIC_PATHS
         or any(path_part in request.url.path for path_part in PUBLIC_PATH_CONTAINS)
         or request.url.path.endswith(PUBLIC_PATH_SUFFIXES)
+        or request.url.path.endswith(PUBLIC_TEST_PATH_SUFFIXES)
     ):
         request.state.user = None
         return await call_next(request)

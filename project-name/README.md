@@ -12,6 +12,14 @@ SQL connection flow:
 KeyVault DATABASE_CONNECTION_STRING -> config.json database settings -> app/core/sqldbconnection.py -> repositories
 ```
 
+External API flow:
+
+```text
+route -> business service -> ExternalApiService -> external API
+```
+
+Outbound authentication uses OAuth 2.0 Client Credentials. The access token is cached until shortly before expiration and sent in the configured authorization header.
+
 This template centralizes non-functional requirements so business teams only implement:
 
 - API route orchestration
@@ -54,7 +62,9 @@ python run_server.py
 
 - `GET /api/sample/health/`
 - `GET /api/sample/health/db`
+- `POST /api/sample/auth/test-token`
 - `POST /api/sample/`
+- `POST /api/sample/external`
 - `POST /api/sample/customer/`
 - `GET /api/sample/customer/`
 - `GET /api/sample/customer/{customer_id}`
@@ -63,6 +73,8 @@ python run_server.py
 - `GET /api/sample/docs`
 
 The `sample` route segment comes from `route_name` in `config.json`.
+
+For local testing without an app registration, `POST /api/sample/auth/test-token` creates an HS256 bearer token containing `email` and `aud` claims. This endpoint only works when `app_env` is `local` and `jwt.test_token_enabled` is `true`.
 
 ## Build Container
 

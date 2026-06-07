@@ -24,11 +24,13 @@
   },
   "jwt": {
     "required": true,
-    "audience": [],
-    "issuer": [],
-    "secret": "",
+    "audience": ["local-test-api"],
+    "issuer": ["local-test-issuer"],
+    "secret": "change-this-local-test-secret",
     "jwks_url": "",
-    "algorithms": ["HS256", "RS256"]
+    "algorithms": ["HS256", "RS256"],
+    "test_token_enabled": true,
+    "test_token_expiry_seconds": 3600
   },
   "error_db": {
     "enabled": false,
@@ -42,5 +44,25 @@
     "trusted_connection": true,
     "trust_server_certificate": true,
     "connection_string": ""
+  },
+  "external_api": {
+    "enabled": false,
+    "base_url": "https://external-api.example.com",
+    "endpoint": "/api/resource",
+    "method": "POST",
+    "timeout_seconds": 30,
+    "verify_ssl": false,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "oauth": {
+      "enabled": true,
+      "token_url": "https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/token",
+      "client_id": "",
+      "client_secret": "",
+      "scope": "api://<external-api-client-id>/.default",
+      "header_name": "Authorization",
+      "header_prefix": "Bearer"
+    }
   }
 }

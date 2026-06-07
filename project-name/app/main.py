@@ -10,6 +10,7 @@ from app.api.middleware.correlation_middleware import correlation_id_middleware
 from app.api.middleware.exception_middleware import handle_exception
 from app.api.middleware.exception_middleware import exception_middleware
 from app.api.middleware.logging_middleware import request_response_logging_middleware
+from app.api.routes.auth_routes import router as auth_router
 from app.api.routes.customer_routes import router as customer_router
 from app.api.routes.health_routes import router as health_router
 from app.api.routes.sample_routes import router as sample_router
@@ -69,6 +70,7 @@ def create_app() -> FastAPI:
         )
 
     app.include_router(health_router, prefix=settings.service_base_path)
+    app.include_router(auth_router, prefix=settings.service_base_path)
     app.include_router(sample_router, prefix=settings.service_base_path)
     app.include_router(customer_router, prefix=settings.service_base_path)
     return app

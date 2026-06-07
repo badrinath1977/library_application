@@ -72,6 +72,8 @@ class JwtSettings(BaseModel):
     secret: str | None = None
     jwks_url: str | None = None
     algorithms: list[str] = Field(default_factory=lambda: ["HS256", "RS256"])
+    test_token_enabled: bool = False
+    test_token_expiry_seconds: int = 3600
 
 
 class ErrorDBSettings(BaseModel):
@@ -87,6 +89,27 @@ class DatabaseSettings(BaseModel):
     trusted_connection: bool = True
     trust_server_certificate: bool = True
     connection_string: str | None = None
+
+
+class ExternalApiOAuthSettings(BaseModel):
+    enabled: bool = True
+    token_url: str = ""
+    client_id: str = ""
+    client_secret: str | None = None
+    scope: str = ""
+    header_name: str = "Authorization"
+    header_prefix: str = "Bearer"
+
+
+class ExternalApiSettings(BaseModel):
+    enabled: bool = False
+    base_url: str = ""
+    endpoint: str = ""
+    method: str = "POST"
+    timeout_seconds: int = 30
+    verify_ssl: bool = True
+    headers: dict[str, str] = Field(default_factory=dict)
+    oauth: ExternalApiOAuthSettings = Field(default_factory=ExternalApiOAuthSettings)
 
 
 class ServerSettings(BaseModel):
@@ -111,6 +134,7 @@ class Settings(BaseModel):
     jwt: JwtSettings = Field(default_factory=JwtSettings)
     error_db: ErrorDBSettings = Field(default_factory=ErrorDBSettings)
     database: DatabaseSettings = Field(default_factory=DatabaseSettings)
+    external_api: ExternalApiSettings = Field(default_factory=ExternalApiSettings)
 
     @property
     def is_local(self) -> bool:
@@ -221,6 +245,16 @@ def _build_settings() -> Settings:
     jwt["secret"] = _env_or_config("JWT_SECRET", jwt.get("secret"))
     jwt["jwks_url"] = _env_or_config("JWT_JWKS_URL", jwt.get("jwks_url"))
     jwt["algorithms"] = _env_or_config("JWT_ALGORITHMS", jwt.get("algorithms", ["HS256", "RS256"]))
+    jwt["test_token_enabled"] = _env_or_config(
+        "JWT_TEST_TOKEN_ENABLED",
+        jwt.get("test_token_enabled", False),
+    )
+    jwt["test_token_expiry_seconds"] = int(
+        _env_or_config(
+            "JWT_TEST_TOKEN_EXPIRY_SECONDS",
+            jwt.get("test_token_expiry_seconds", 3600),
+        )
+    )
 
     error_db = data.setdefault("error_db", {})
     error_db["enabled"] = _env_or_config("ERROR_DB_ENABLED", error_db.get("enabled", False))
@@ -244,6 +278,56 @@ def _build_settings() -> Settings:
         database.get("connection_string"),
     )
 
+    external_api = data.setdefault("external_api", {})
+    external_api["enabled"] = _env_or_config(
+        "EXTERNAL_API_ENABLED",
+        external_api.get("enabled", False),
+    )
+    external_api["base_url"] = _env_or_config(
+        "EXTERNAL_API_BASE_URL",
+        external_api.get("base_url", ""),
+    )
+    external_api["endpoint"] = _env_or_config(
+        "EXTERNAL_API_ENDPOINT",
+        external_api.get("endpoint", ""),
+    )
+    external_api["method"] = _env_or_config(
+        "EXTERNAL_API_METHOD",
+        external_api.get("method", "POST"),
+    )
+    external_api["timeout_seconds"] = int(
+        _env_or_config(
+            "EXTERNAL_API_TIMEOUT_SECONDS",
+            external_api.get("timeout_seconds", 30),
+        )
+    )
+    external_api["verify_ssl"] = _env_or_config(
+        "EXTERNAL_API_VERIFY_SSL",
+        external_api.get("verify_ssl", True),
+    )
+
+    external_oauth = external_api.setdefault("oauth", {})
+    external_oauth["enabled"] = _env_or_config(
+        "EXTERNAL_API_OAUTH_ENABLED",
+        external_oauth.get("enabled", True),
+    )
+    external_oauth["token_url"] = _env_or_config(
+        "EXTERNAL_API_TOKEN_URL",
+        external_oauth.get("token_url", ""),
+    )
+    external_oauth["client_id"] = _env_or_config(
+        "EXTERNAL_API_CLIENT_ID",
+        external_oauth.get("client_id", ""),
+    )
+    external_oauth["client_secret"] = _env_or_config(
+        "EXTERNAL_API_CLIENT_SECRET",
+        external_oauth.get("client_secret"),
+    )
+    external_oauth["scope"] = _env_or_config(
+        "EXTERNAL_API_SCOPE",
+        external_oauth.get("scope", ""),
+    )
+
     settings = Settings(**data)
     if not settings.is_local:
         settings.jwt.audience = _to_list(
@@ -254,6 +338,11 @@ def _build_settings() -> Settings:
         )
         settings.jwt.secret = settings.get_secret("JWT_SECRET", settings.jwt.secret)
         settings.jwt.jwks_url = settings.get_secret("JWT_JWKS_URL", settings.jwt.jwks_url)
+
+    settings.external_api.oauth.client_secret = settings.get_secret(
+        "EXTERNAL_API_CLIENT_SECRET",
+        settings.external_api.oauth.client_secret,
+    )
 
     return settings
 

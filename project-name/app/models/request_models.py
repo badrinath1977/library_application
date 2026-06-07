@@ -1,9 +1,20 @@
+from typing import Any
+
 from pydantic import BaseModel, Field
 
 
 class SampleRequest(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
     description: str | None = Field(default=None, max_length=500)
+
+
+class ExternalApiRequest(BaseModel):
+    payload: dict[str, Any] = Field(default_factory=dict)
+
+
+class TestTokenRequest(BaseModel):
+    email: str = Field(..., min_length=3, max_length=255)
+    audience: str | None = Field(default=None, min_length=1, max_length=255)
 
 
 class CustomerCreateRequest(BaseModel):
