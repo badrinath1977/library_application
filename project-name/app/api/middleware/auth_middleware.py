@@ -54,7 +54,7 @@ def _validate_token(token: str, settings):
         if settings.jwt_jwks_url:
             jwks_client = jwt.PyJWKClient(settings.jwt_jwks_url)
             signing_key = jwks_client.get_signing_key_from_jwt(token)
-            return jwt.decode(
+            claims = jwt.decode(
                 token,
                 signing_key.key,
                 algorithms=algorithms,
